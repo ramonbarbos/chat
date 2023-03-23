@@ -49,7 +49,9 @@
       <li class="nav-item">
         <a class="nav-link" <?php verificaPermissaoMenu(2) ?> href="<?php INCLUDE_PATH_PAINEL ?>cadastrar-produtos">Controle Estoque</a>
       </li>
-   
+    <li class="nav-item">
+        <a class="nav-link" <?php verificaPermissaoMenu(2) ?> href="<?php INCLUDE_PATH_PAINEL ?>visualizar-produtos">Visualizar Estoque</a>
+      </li>
     </ul>
 
 
