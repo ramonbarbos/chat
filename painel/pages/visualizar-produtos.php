@@ -91,7 +91,7 @@
                                     </div>
                                 </form>
                                 <a  class="card-link">Editar</a>
-                                <a item_id="<?php echo $value['id'] ?>" class="card-link">Excluir</a>
+                                <button   class="btn btn-outline-danger" onclick="apagarProd(<?php echo $value['id'] ?>)" >Excluir</button>
                             </div>
                         </div>
                     <?php } ?>
@@ -113,7 +113,7 @@
 
     <h4><a href="<?php echo INCLUDE_PATH_PAINEL?>visualizar-produtos">No estoque</a> > Pendentes</h4>
 
-
+    <span id="msg" ></span>
 
     <?php
                 if(isset($_POST['atualizar'])){
@@ -145,7 +145,7 @@
                        $sql->execute();
                        $produtos = $sql->fetchAll();
                        if(count($produtos) == 0){
-                        echo 'Nenhum produto encontrado, pesquise novamente!';
+                            echo 'Nenhum produto em falta!';
                         }
                        foreach( $produtos as $key => $value){ 
                         $imagemSingle = MySql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_imagens` WHERE produto_id = $value[id] LIMIT 1");
@@ -178,7 +178,7 @@
                                     </div>
                                 </form>
                                 <a  class="card-link">Editar</a>
-                                <a item_id="<?php echo $value['id'] ?>" class="card-link">Excluir</a>
+                                <button class="btn btn-outline-danger"  onclick="apagarProd(<?php echo $value['id'] ?>)" >Excluir</button>
                             </div>
                         </div>
                     <?php } ?>
@@ -193,3 +193,18 @@
 
 
     <?php }?>
+
+    <script>
+          //DELETAR  PUBLICAÇÃO
+  async function apagarProd(id){
+    console.log("Envido: " +id)
+    const dados = await fetch("./class/apagarProd.php?id=" + id) //enviar
+    const resposta = await dados.json(); //receber
+    console.log(resposta)
+
+    window.location.reload();
+
+
+
+}
+    </script>

@@ -128,7 +128,7 @@ async function listFeed(id){
         
     }else{
         document.getElementById('msg').innerHTML ='<div class="alert alert-primary" role="alert">'+resposta['msg']+'</div>'  ;
-
+       
     }
 
 }
