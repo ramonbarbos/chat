@@ -11,21 +11,6 @@
     <h4>No estoque</h4>
 
     <?php
-                if(isset($_POST['atualizar'])){
-
-                    $quantidade = $_POST['quantidade'];
-                    $produto_id = @$_POST['produto_id'];
-                    if($quantidade < 0){
-                        Painel::alerta('erro','Erro ao atualizar a quantidade');
-
-                    }else{
-                        $sql = MySql::conectar()->prepare("UPDATE `tb_admin.estoque` SET quantidade = $quantidade WHERE id = $produto_id ");
-                        $sql->execute();
-
-                        Painel::alerta('sucesso','Produtos atualizado com sucesso');
-
-                    }
-                }
                 $sql = MySql::conectar()->prepare("SELECT * FROM `tb_admin.estoque` WHERE quantidade = 0");
                 $sql->execute();
                 if($sql->rowCount() > 0 ){
@@ -68,9 +53,8 @@
                 ?>
 
                 
-                
-
-                    <div class="card d-flex" style="width: 18rem; margin-right: 5px;">
+                                        
+                        <div class="card d-flex" style="width: 18rem; margin-right: 5px;">
 
                         <div class="">
                             <img src="<?php echo INCLUDE_PATH_PAINEL ?>uploads/<?php echo $imagemSingle ?>" class="card-img-top" alt="...">
@@ -82,16 +66,10 @@
                                 <h6 class="card-subtitle mb-2 text-muted">Altura: <?php echo $value['altura'] ?>  </h6>
                                 <h6 class="card-subtitle mb-2 text-muted">Comprimento: <?php echo $value['comprimento'] ?>  </h6>
                                 <h6 class="card-subtitle mb-2 text-muted">Peso: <?php echo $value['peso'] ?>  </h6>
-                                <h6 class="card-subtitle mb-2 text-muted ">Quantidade: </h6>
-                                <form method="post" >
-                                    <div class="mb-3 ">
-                                        <input type="number" name="quantidade" min="0" max="900" step="1" class="form-control" value="<?php echo $value['quantidade'] ?>" >
-                                        <input type="hidden" name="produto_id" value="<?php echo $value['id'] ?>" >
-                                        <input type="submit" class="btn btn-outline-dark" value="Atualizar" name="atualizar">
-                                    </div>
-                                </form>
-                                <a  class="card-link">Editar</a>
-                                <button   class="btn btn-outline-danger" onclick="apagarProd(<?php echo $value['id'] ?>)" >Excluir</button>
+                                <h6 class="card-subtitle mb-2 text-muted ">Quantidade: <?php echo $value['quantidade'] ?> </h6>
+                                
+                                <button   class="btn btn-outline-primary"  onclick="editarProd(<?php echo $value['id'] ?>)" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Editar</button>
+                                <button class="btn btn-outline-danger"  onclick="apagarProd(<?php echo $value['id'] ?>)" >Excluir</button>
                             </div>
                         </div>
                     <?php } ?>
@@ -115,25 +93,7 @@
 
     <span id="msg" ></span>
 
-    <?php
-                if(isset($_POST['atualizar'])){
 
-                    $quantidade = $_POST['quantidade'];
-                    $produto_id = @$_POST['produto_id'];
-                    if($quantidade < 0){
-                        Painel::alerta('erro','Erro ao atualizar a quantidade');
-
-                    }else{
-                        $sql = MySql::conectar()->prepare("UPDATE `tb_admin.estoque` SET quantidade = $quantidade WHERE id = $produto_id ");
-                        $sql->execute();
-
-                        Painel::alerta('sucesso','Produtos atualizado com sucesso');
-
-                    }
-                }
-              
-
-                ?>
             
 
                 <div class="container" style="display:flex">
@@ -169,15 +129,10 @@
                                 <h6 class="card-subtitle mb-2 text-muted">Altura: <?php echo $value['altura'] ?>  </h6>
                                 <h6 class="card-subtitle mb-2 text-muted">Comprimento: <?php echo $value['comprimento'] ?>  </h6>
                                 <h6 class="card-subtitle mb-2 text-muted">Peso: <?php echo $value['peso'] ?>  </h6>
-                                <h6 class="card-subtitle mb-2 text-muted ">Quantidade: </h6>
-                                <form method="post" >
-                                    <div class="mb-3 ">
-                                        <input type="number" name="quantidade" min="0" max="900" step="1" class="form-control" value="<?php echo $value['quantidade'] ?>" >
-                                        <input type="hidden" name="produto_id" value="<?php echo $value['id'] ?>" >
-                                        <input type="submit" class="btn btn-outline-dark" value="Atualizar" name="atualizar">
-                                    </div>
-                                </form>
-                                <a  class="card-link">Editar</a>
+                                <h6 class="card-subtitle mb-2 text-muted ">Quantidade: <?php echo $value['quantidade'] ?> </h6>
+
+                                <button   class="btn btn-outline-primary"  onclick="editarProd(<?php echo $value['id'] ?>)" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Editar</button>
+
                                 <button class="btn btn-outline-danger"  onclick="apagarProd(<?php echo $value['id'] ?>)" >Excluir</button>
                             </div>
                         </div>
@@ -193,18 +148,140 @@
 
 
     <?php }?>
+    <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+                <div class="modal-body">
+                <div class="card d-flex" style="width: 20rem; margin-right: 5px;">
+                <span id="msg" ></span>
+                    <span id="msgADD" ></span>
+            <div class="">
+                <span id="img" ></span>
+            </div>
+                <form action="" method="post" id="formProd">
+                
+                    <div class="card-body">
+                        <div class="">
+                            <span class="">Nome:</span>
+                            <span id="nome"></span>
+                        </div>
+                        <div class="">
+                            <span class="">Descrição:</span>
+                            <span id="descricao"></span>
+                        </div> 
+                        <div class="">
+                            <span class="">Largura:  </span>
+                            <span id="largura"></span>
+                        </div>  
+                        <div class="">
+                            <span class="">Altura:  </span>
+                            <span id="altura"></span>
+                        </div> 
+                        <div class="">
+                            <span class="">Comprimento:  </span>
+                            <span id="comprimento"></span>
+                        </div> 
+                        <div class="">
+                            <span class="">Peso:  </span>
+                            <span id="peso"></span>
+                        </div> 
+                        <div class="">
+                            <span class="">Quantidade:  </span>
+                            <span id="quantidade"></span>
+                        </div> 
+                            <span id="id" ></span>
+                        <div class="d-flex" >
+                            <button id="excluir"  class="btn btn-outline-danger" onclick="cancelarUp()" >Cancelar</button>
+                            <button type="submit" class="btn btn-outline-success" >Salvar</button>
+                        </div>
+                </form>
+                        
+                </div>
+            </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
 
     <script>
           //DELETAR  PUBLICAÇÃO
-  async function apagarProd(id){
-    console.log("Envido: " +id)
-    const dados = await fetch("./class/apagarProd.php?id=" + id) //enviar
-    const resposta = await dados.json(); //receber
-    console.log(resposta)
+            async function apagarProd(id){
+                console.log("Envido: " +id)
+                const dados = await fetch("./class/apagarProd.php?id=" + id) //enviar
+                const resposta = await dados.json(); //receber
+                console.log(resposta)
 
-    window.location.reload();
+                window.location.reload();
 
 
 
-}
+            }
+            
+             //Mudar Input
+             async function cancelarUp(){
+                window.location.reload();
+            }
+
+            //BUSCAR PRODUTO
+            async function editarProd(id){
+                console.log("Envido: " +id)
+                const dados = await fetch("./class/consultaProd.php?id=" + id) //enviar
+                const resposta = await dados.json(); //receber
+                console.log(resposta)
+
+                if(resposta['erro']){
+                document.getElementById('msg').innerHTML ='<div class="alert alert-danger" role="alert">'+resposta['msg']+'</div>'  ;
+                
+                 }else{
+    
+                    document.getElementById('img').innerHTML = '<img src="./uploads/'+resposta['dadosImg'].imagem+'" class="card-img-top" alt="...">' ;
+                    document.getElementById('nome').innerHTML = '<input type="text" name="nome" id="nome" class="" value="'+resposta['dados'].nome+'" >' ;
+                    document.getElementById('descricao').innerHTML = '<input type="text" name="descricao" id="descricao" class="" value="'+resposta['dados'].descricao+'" >' ;
+                    document.getElementById('largura').innerHTML = '<input type="text" name="largura" id="largura" class="" value="'+resposta['dados'].largura+'" >' ;
+                    document.getElementById('altura').innerHTML = '<input type="text" name="altura" id="altura" class="" value="'+resposta['dados'].altura+'" >' ;
+                    document.getElementById('comprimento').innerHTML = '<input type="text" name="comprimento" id="comprimento" class="" value="'+resposta['dados'].comprimento+'" >' ;
+                    document.getElementById('peso').innerHTML = '<input type="text" name="peso" id="peso" class="" value="'+resposta['dados'].peso+'" >' ;
+                    document.getElementById('quantidade').innerHTML = '<input type="text" name="quantidade" id="quantidade" class="" value="'+resposta['dados'].quantidade+'" >' ;
+                    document.getElementById('id').innerHTML = '<input type="hidden" name="id" id="id" class="" value="'+resposta['dados'].id+'" >' ;
+                    
+                }
+        
+             }
+
+              //UPDATE NA PUBLICAÇÃO
+            const cadForm = document.getElementById("formProd");
+
+                cadForm.addEventListener("submit", async (e) =>{
+                    e.preventDefault(); //para não recarrecar a pagina
+                    console.log("chegou a requisição para ser atualizada")
+
+                    const dadosForm =  new FormData(cadForm);
+                    dadosForm.append("add", 1)
+
+                    const dadosPubli = await fetch("./class/atualizarProd.php",{
+                        method: "POST",
+                        body:dadosForm
+                    });
+                    const respostaPubli = await dadosPubli.json();
+                    console.log(respostaPubli)
+
+                    if(respostaPubli['erro']){
+                        document.getElementById('msgADD').innerHTML ='<div class="alert alert-danger" role="alert">'+respostaPubli['msg']+'</div>'  ;
+                        
+                            //const visModal = document.getElementById("feedUser");
+                        // visModal.show();
+                    }else{
+                        document.getElementById('msgADD').innerHTML ='<div class="alert alert-success" role="alert">'+respostaPubli['msg']+'</div>'  ;
+
+                        console.log(respostaPubli);
+                    }
+       
+
+             })
     </script>
