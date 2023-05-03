@@ -21,8 +21,10 @@
 
     <!--CSS -->
     <link rel="stylesheet" href="<?php echo INCLUDE_PATH; ?>css/style.css">
+    <link rel="stylesheet" href="<?php echo INCLUDE_PATH_PAINEL; ?>css/chat.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     
+    <script src="<?php echo INCLUDE_PATH?>js/jquery-3.6.3.js"></script>
     <!--TINYMCE-->
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -47,11 +49,9 @@
         <a class="nav-link " <?php verificaPermissaoMenu(2) ?> href="<?php INCLUDE_PATH_PAINEL ?>cadastro">Usuario</a>
       </li> 
       <li class="nav-item">
-        <a class="nav-link" <?php verificaPermissaoMenu(2) ?> href="<?php INCLUDE_PATH_PAINEL ?>cadastrar-produtos">Controle Estoque</a>
+        <a class="nav-link" <?php verificaPermissaoMenu(2) ?> href="<?php INCLUDE_PATH_PAINEL ?>chat">Chat Online</a>
       </li>
-    <li class="nav-item">
-        <a class="nav-link" <?php verificaPermissaoMenu(2) ?> href="<?php INCLUDE_PATH_PAINEL ?>visualizar-produtos">Visualizar Estoque</a>
-      </li>
+  
     </ul>
 
 
@@ -61,7 +61,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="<?php echo INCLUDE_PATH?>_bootstrap/js/popper.min.js"></script>
    <script src="<?php echo INCLUDE_PATH?>_bootstrap/js/bootstrap.min.js"></script>
-
+<script src="./js/chat.js"></script>
    
 
   </body>

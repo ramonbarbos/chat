@@ -1,0 +1,18 @@
+
+
+.mensagem-chat{
+    background-color: rgb(245, 250, 229);
+    overflow-y: scroll;
+    height: 400px;
+    padding: 10px;
+}
+.msg{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.divi{
+    width: 90%;
+    height: 1px;
+    background-color: beige;
+}

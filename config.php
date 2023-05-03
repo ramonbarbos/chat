@@ -7,8 +7,8 @@
 
     #VARIAVEIS
     define('NOME_SITE','Facebook');
-    define('INCLUDE_PATH','http://localhost/controle_estoque/');
-    define('INCLUDE_PATH_LOGIN','http://localhost/controle_estoque/login');
+    define('INCLUDE_PATH','http://localhost/chat/');
+    define('INCLUDE_PATH_LOGIN','http://localhost/chat/login');
     define('INCLUDE_PATH_PAINEL',INCLUDE_PATH.'painel/');
     define('BASE_DIR_PAINEL',__DIR__.'/painel');
 
