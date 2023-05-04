@@ -2,6 +2,7 @@
 
     include('class/ComponentePainel.php');
     include('class/Usuario.php');
+
     if(isset($_GET['logout'])){
         Painel::logout();
        
