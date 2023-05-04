@@ -14,9 +14,10 @@
    
         <div class="mensagem-chat">
         <?php
-        $mensagem = MySql::conectar()->prepare("SELECT * FROM `tb_admin.chat`");
+        $mensagem = MySql::conectar()->prepare("SELECT * FROM `tb_admin.chat`  LIMIT 10 ");
         $mensagem->execute();
         $mensagem = $mensagem->fetchAll();
+       # $mensagem = array_reverse($mensagem);
         foreach($mensagem as $key => $value){
          $usuarios = MySql::conectar()->prepare("SELECT nome FROM `tb_admin.usuarios`");
          $usuarios->execute();
