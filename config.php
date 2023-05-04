@@ -16,7 +16,7 @@
     define('HOST','localhost');
     define('USER','root');
     define('PASSWORD','');
-    define('DATABASE','site_2');
+    define('DATABASE','site_3');
 
     //Funcoes
       function pegaCargo($cargo){

@@ -27,6 +27,7 @@
                     //Atribuindo as informações que esta no banco de dados para a Sessão
                     $_SESSION['login'] = true;
                     $_SESSION['id'] = $info['id'];
+                    $_SESSION['user_id'] = $info['id'];
                     $_SESSION['user'] = $user;
                     $_SESSION['password'] = $password;
                     $_SESSION['cargo'] = $info['cargo'];
