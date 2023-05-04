@@ -1,4 +1,6 @@
 
+var lastId = $('lastId').attr('val');
+
      $("textarea").keyup(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -27,7 +29,7 @@
         $.ajax({
             url:'http://localhost/chat/painel/ajax/form.php',
             method: 'post',
-            data: {'mensagem': mensagem}
+            data: {'mensagem': mensagem,'acao':'enviarMensagem'}
         }).done(function(data){
             $('.mensagem-chat').append(data);
         })
@@ -35,7 +37,14 @@
 
     //Recuperando novas mensagens do banco de dados
     function recuperarMensagens(){
-        console.log("recuperando")
+        $('textarea').val('');
+        $.ajax({
+            url:'http://localhost/chat/painel/ajax/form.php',
+            method: 'post',
+            data: {'lastId': lastId,'acao':'pegarMensagem'}
+        }).done(function(data){
+            $('.mensagem-chat').append(data);
+        })
     }
 
     //Tempo de intervalo

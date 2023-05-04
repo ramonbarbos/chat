@@ -22,6 +22,7 @@
          $usuarios = MySql::conectar()->prepare("SELECT nome FROM `tb_admin.usuarios`");
          $usuarios->execute();
          $usuarios = $usuarios->fetch()['nome'];
+         $lastId = $value['id'];    
     ?>
     <div class="chat-msg">
             <span><?php echo $usuarios ?></span>
@@ -31,6 +32,7 @@
             <?php
             }
         ?>
+        <lastId val="<?php echo $lastId ?>" />
         </div>
        
         <form class="msg" action="<?php echo INCLUDE_PATH_PAINEL ?>ajax/form.php" method="post" >
