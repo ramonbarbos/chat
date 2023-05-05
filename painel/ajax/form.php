@@ -18,10 +18,28 @@ include '../class/MySql.php';
                 <p>'.$mensagem.'</p>
                 <div class="divi"></div>
             </div>';
+        $_SESSION['lastIdChat'] = MySql::conectar()->lastInsertId();
 
         
     }else if(isset($_POST['acao']) && $_POST['acao'] == 'pegarMensagem'){
-        echo 'nova mensagem';
+        $lastId = $_SESSION['lastIdChat'];
+
+        $sql = MySql::conectar()->prepare("SELECT * FROM `tb_admin.chat`  WHERE id > $lastId ");
+        $sql->execute();
+        $mensagem = $sql->fetchAll();
+        $mensagem = array_reverse($mensagem);
+        foreach($mensagem as $key => $value){
+            $usuarios = MySql::conectar()->prepare("SELECT nome FROM `tb_admin.usuarios`  WHERE id = $value[user_id]");
+            $usuarios->execute();
+            $usuarios = $usuarios->fetch()['nome'];
+            echo ' <div class="chat-msg">
+                <span>'.$usuarios.'</span>
+                <p>'.$value['mensagem'].'</p>
+                <div class="divi"></div>
+            </div>';
+
+            $_SESSION['lastIdChat']= $value['id'];
+        }
     }
     
 

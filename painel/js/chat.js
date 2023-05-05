@@ -1,6 +1,6 @@
 
-var lastId = $('lastId').attr('val');
-
+    $(".mensagem-chat").scrollTop($('.mensagem-chat')[0].scrollHeight);
+    
      $("textarea").keyup(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -11,7 +11,6 @@ var lastId = $('lastId').attr('val');
 
         }
 
-       
   
     });
 
@@ -32,6 +31,8 @@ var lastId = $('lastId').attr('val');
             data: {'mensagem': mensagem,'acao':'enviarMensagem'}
         }).done(function(data){
             $('.mensagem-chat').append(data);
+            $(".mensagem-chat").scrollTop($('.mensagem-chat')[0].scrollHeight);
+
         })
     }
 
@@ -41,9 +42,11 @@ var lastId = $('lastId').attr('val');
         $.ajax({
             url:'http://localhost/chat/painel/ajax/form.php',
             method: 'post',
-            data: {'lastId': lastId,'acao':'pegarMensagem'}
+            data: {'acao':'pegarMensagem'}
         }).done(function(data){
             $('.mensagem-chat').append(data);
+            $(".mensagem-chat").scrollTop($('.mensagem-chat')[0].scrollHeight);
+
         })
     }
 
